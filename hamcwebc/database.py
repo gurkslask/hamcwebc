@@ -75,3 +75,29 @@ def reference_col(tablename, nullable=False, pk_name='id', **kwargs):
     return db.Column(
         db.ForeignKey('{0}.{1}'.format(tablename, pk_name)),
         nullable=nullable, **kwargs)
+
+
+class Sensor(db.Model):
+    """Sensor class that connects to limits, alarm and trends."""
+
+    __tablename__ = 'sensor'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, unique=True)
+    value = db.Column(db.Float)
+
+    def __repr__(self):
+        """Print data."""
+        return 'Name: {}, Value: {}'.format(self.name, self.value)
+
+
+class SensorLimit(db.Model):
+    """Sensor limits that connects to Sensor."""
+
+    __tablename__ = 'limits'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, unique=True)
+    value = db.Column(db.Float)
+
+    def __repr__(self):
+        """Print data."""
+        return 'Name: {}, Value: {}'.format(self.name, self.value)
