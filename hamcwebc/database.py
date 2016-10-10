@@ -84,7 +84,7 @@ class Sensor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True)
     value = db.Column(db.Float)
-    limits = db.relationship('SensorLimit', backref='sensors')
+    limits = db.relationship('sensorlimit', backref='sensors')
 
     def __repr__(self):
         """Print data."""
@@ -98,7 +98,7 @@ class SensorLimit(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True)
     value = db.Column(db.Float)
-    sensor_id = db.Column(db.Integer, db.ForeignKey('sensors.id'))
+    sensor_id = db.Column(db.Integer, db.ForeignKey('sensor.id'))
 
     def __repr__(self):
         """Print data."""
