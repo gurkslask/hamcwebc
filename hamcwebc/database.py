@@ -80,14 +80,15 @@ def reference_col(tablename, nullable=False, pk_name='id', **kwargs):
 class Sensor(db.Model):
     """Sensor class that connects to limits, alarm and trends."""
 
-    __tablename__ = 'sensor'
+    __tablename__ = 'sensors'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True)
     value = db.Column(db.Float)
+    limits = db.relationship('SensorLimit', backref='sensors')
 
     def __repr__(self):
         """Print data."""
-        return 'Name: {}, Value: {}'.format(self.name, self.value)
+        return 'Name: {}, Value: {}, limits: {}'.format(self.name, self.value, self.limits)
 
 
 class SensorLimit(db.Model):
@@ -97,7 +98,8 @@ class SensorLimit(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True)
     value = db.Column(db.Float)
+    sensor_id = db.Column(db.Integer, db.ForeignKey('sensors.id'))
 
     def __repr__(self):
         """Print data."""
-        return 'Name: {}, Value: {}'.format(self.name, self.value)
+        return 'Name: {}, Value: {}, sensor_id: {}'.format(self.name, self.value, self.sensor_id)
