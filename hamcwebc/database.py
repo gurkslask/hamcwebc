@@ -80,7 +80,6 @@ def reference_col(tablename, nullable=False, pk_name='id', **kwargs):
 class Sensor(db.Model):
     """Sensor class that connects to limits, alarm and trends."""
 
-    __tablename__ = 'sensors'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True)
     value = db.Column(db.Float)
@@ -94,7 +93,6 @@ class Sensor(db.Model):
 class SensorLimit(db.Model):
     """Sensor limits that connects to Sensor."""
 
-    __tablename__ = 'limits'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True)
     value = db.Column(db.Float)
