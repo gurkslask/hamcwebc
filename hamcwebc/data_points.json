@@ -13,6 +13,20 @@
             }
         ]
     },
+    "3": {
+        "name": "GT3",
+        "value": 3,
+        "limits": [
+            {
+                "name": "GT3H",
+                "value": 3.0
+            },
+            {
+                "name": "GT3L",
+                "value": 3.0
+            }
+        ]
+    },
     "2": {
         "name": "GT2",
         "value": 3,
