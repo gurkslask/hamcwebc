@@ -1,0 +1,22 @@
+{
+    "1": {
+        "name": "GT1",
+        "value": 3,
+        "limits": [
+            {
+                "name": "GT1H",
+                "value": 3.0
+            }
+        ]
+    },
+    "2": {
+        "name": "GT2",
+        "value": 3,
+        "limits": [
+            {
+                "name": "GT2H",
+                "value": 3.0
+            }
+        ]
+    }
+}
