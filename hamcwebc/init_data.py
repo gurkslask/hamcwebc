@@ -1,6 +1,9 @@
 """Loads the data points configuration from a import JSON file."""
 import json
 
+from .extensions import db
+from .database import Sensor
+
 
 class InitializeSQL(object):
     """Takes JSON and puts into SQL database."""
@@ -9,7 +12,6 @@ class InitializeSQL(object):
         """Constructor."""
         self.file_name = 'data_points.json'
 
-    @staticmethod
     def read_file(self):
         """Extract the JSON file."""
         with open(self.file_name, 'r') as f:
@@ -20,9 +22,12 @@ class InitializeSQL(object):
         """Take SQL_values and make an INSERT statement."""
         for i in sql_values:
             print(i)
-        pass
+            print('INSERT INTO sensor Name: {}, Value: {}'.format(
+                sql_values[i]['name'], sql_values[i]['value'])
+            )
+            for j in sql_values[i]['limits']:
+                print(j)
 
-    @staticmethod
     def do_work(self):
         """Tie together everything."""
         self.read_file()
@@ -31,4 +36,4 @@ class InitializeSQL(object):
 
 if __name__ == '__main__':
     a = InitializeSQL()
-    print(a.do_work(a))
+    print(a.do_work())

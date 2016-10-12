@@ -6,6 +6,10 @@
             {
                 "name": "GT1H",
                 "value": 3.0
+            },
+            {
+                "name": "GT1L",
+                "value": 3.0
             }
         ]
     },
@@ -15,6 +19,10 @@
         "limits": [
             {
                 "name": "GT2H",
+                "value": 3.0
+            },
+            {
+                "name": "GT2L",
                 "value": 3.0
             }
         ]
