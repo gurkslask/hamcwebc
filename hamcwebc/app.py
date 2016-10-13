@@ -4,7 +4,7 @@ from flask import Flask, render_template
 
 from hamcwebc import commands, public, user
 from hamcwebc.assets import assets
-from hamcwebc.extensions import bcrypt, cache, csrf_protect, db, debug_toolbar, login_manager, migrate
+from hamcwebc.extensions import bcrypt, cache, csrf_protect, db, debug_toolbar, login_manager, migrate, celery
 from hamcwebc.settings import ProdConfig
 
 
@@ -33,6 +33,7 @@ def register_extensions(app):
     login_manager.init_app(app)
     debug_toolbar.init_app(app)
     migrate.init_app(app, db)
+    celery.init_app(app)
     return None
 
 

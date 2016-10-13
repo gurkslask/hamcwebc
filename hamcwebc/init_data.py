@@ -2,7 +2,7 @@
 import json
 import os
 
-from .extensions import db
+from .extensions import db, celery
 from .database import Sensor, SensorLimit
 
 
@@ -49,6 +49,11 @@ class InitSQL(object):
         sensor = Sensor.query.filter_by(name='GT1').first()
         sensor.update(True, value=578)
 
+
+@celery.task()
+def add_together(a, b):
+    """Test."""
+    return a + b
 
 if __name__ == '__main__':
     a = InitSQL()
