@@ -23,7 +23,11 @@ class CRUDMixin(object):
 
     def update(self, commit=True, **kwargs):
         """Update specific fields of a record."""
+        print('here goes update')
+        print(kwargs)
+        print(commit)
         for attr, value in kwargs.items():
+            print(attr, value)
             setattr(self, attr, value)
         return commit and self.save() or self
 
@@ -79,7 +83,7 @@ def reference_col(tablename, nullable=False, pk_name='id', **kwargs):
         nullable=nullable, **kwargs)
 
 
-class Sensor(db.Model):
+class Sensor(CRUDMixin, db.Model):
     """Sensor class that connects to limits, alarm and trends."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -93,7 +97,7 @@ class Sensor(db.Model):
         return 'Name: {}, Value: {}, limits: {}'.format(self.name, self.value, self.limits)
 
 
-class SensorLimit(db.Model):
+class SensorLimit(CRUDMixin, db.Model):
     """Sensor limits that connects to Sensor."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -106,7 +110,7 @@ class SensorLimit(db.Model):
         return 'Name: {}, Value: {}, sensor_id: {}'.format(self.name, self.value, self.sensor_id)
 
 
-class Trend(db.Model):
+class Trend(CRUDMixin, db.Model):
     """Data points (time and value) that connects to Sensor."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -118,19 +122,3 @@ class Trend(db.Model):
         """Print data."""
         return 'Name: {}, Value: {}, Time: {},sensor_id: {}'.format(
                 self.name, self.value, self.time, self.sensor_id)
-
-
-def init_data():
-    """Init some data."""
-    GT1H = SensorLimit(name='GT1H', value=3)
-    GT1L = SensorLimit(name='GT1L', value=3)
-    GT1 = Sensor(name='GT1', value=42, limits=[GT1H, GT1L])
-    db.session.add(Trend(value=1, time=dt.datetime.now(), sensors=[GT1]))
-    db.session.add_all([GT1, GT1H, GT1L])
-    db.session.commit()
-
-def init_data2():
-    GT1 = Sensor.query.filter_by(name='GT1').first()
-    db.session.add(Trend(value=3.42, time=dt.datetime.now(), sensors=[GT1]))
-    db.session.commit()
-
