@@ -38,6 +38,7 @@ class DevConfig(Config):
     DEBUG_TB_ENABLED = True
     ASSETS_DEBUG = True  # Don't bundle/minify static assets
     CACHE_TYPE = 'simple'  # Can be "memcached", "redis", etc.
+    BROKERY_URL = 'amqp://localhost'
 
 
 class TestConfig(Config):

@@ -7,8 +7,6 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CsrfProtect
-from celery import Celery
-import flask
 
 bcrypt = Bcrypt()
 csrf_protect = CsrfProtect()
@@ -53,12 +51,3 @@ class FlaskCelery(Celery):
         """Initialize."""
         self.app = app
         self.config_from_object(app.config)'''
-
-
-celery = Celery('hamcwebc', broker='amqp://127.0.0.1', backend='amqp')
-
-
-@celery.task
-def add_together(a, b):
-    """Test."""
-    return a + b
