@@ -8,6 +8,7 @@ from hamcwebc.public.forms import LoginForm
 from hamcwebc.user.forms import RegisterForm
 from hamcwebc.user.models import User
 from hamcwebc.utils import flash_errors
+from hamcwebc.tasks import add_together
 
 blueprint = Blueprint('public', __name__, static_folder='../static')
 
@@ -61,3 +62,9 @@ def about():
     """About page."""
     form = LoginForm(request.form)
     return render_template('public/about.html', form=form)
+
+
+@blueprint.route('/celery/')
+def celery():
+    """Celery page."""
+    return(str(add_together.delay(1, 2)))
