@@ -39,7 +39,7 @@ class DevConfig(Config):
     ASSETS_DEBUG = True  # Don't bundle/minify static assets
     CACHE_TYPE = 'simple'  # Can be "memcached", "redis", etc.
     CELERY_BROKER_URL = 'amqp://localhost'
-    CELERY_BACKEND = 'amqp://localhost'
+    CELERY_BACKEND = 'rpc://'
 
 
 class TestConfig(Config):
