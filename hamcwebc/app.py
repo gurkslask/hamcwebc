@@ -20,7 +20,6 @@ def create_app(config_object=ProdConfig):
     register_errorhandlers(app)
     register_shellcontext(app)
     register_commands(app)
-    register_celery(app)
     return app
 
 
@@ -62,7 +61,6 @@ def register_shellcontext(app):
         """Shell context objects."""
         return {
             'db': db,
-            'celery': celery,
             'User': user.models.User}
 
     app.shell_context_processor(shell_context)
@@ -74,9 +72,3 @@ def register_commands(app):
     app.cli.add_command(commands.lint)
     app.cli.add_command(commands.clean)
     app.cli.add_command(commands.urls)
-
-
-def register_celery(app):
-    """Delay creation of app."""
-    celery.conf.update(app.config)
-    return app

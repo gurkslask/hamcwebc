@@ -15,39 +15,3 @@ db = SQLAlchemy()
 migrate = Migrate()
 cache = Cache()
 debug_toolbar = DebugToolbarExtension()
-
-'''
-class FlaskCelery(Celery):
-    """Celery meta class."""
-
-    """Source: http://stackoverflow.com/questions/12044776/how-to-use-flask-sqlalchemy-in-a-celery-task#14146403"""
-
-    def __init__(self, *args, **kwargs):
-        """Construct."""
-        super(FlaskCelery, self).__init__(*args, **kwargs)
-        self.patch_task()
-
-        if 'app' in kwargs:
-            self.init_app(kwargs['app'])
-
-    def patch_task(self):
-        """No idea, will figure out soon."""
-        TaskBase = self.Task
-        _celery = self
-
-        class ContextTask(TaskBase):
-            abstract = True
-
-            def __call__(self, *args, **kwargs):
-                if flask.has_app_context():
-                    return TaskBase.__call__(self, *args, **kwargs)
-                else:
-                    with _celery.app.app_context():
-                        return TaskBase.__call__(self, *args, **kwargs)
-
-        self.Task = ContextTask
-
-    def init_app(self, app):
-        """Initialize."""
-        self.app = app
-        self.config_from_object(app.config)'''
