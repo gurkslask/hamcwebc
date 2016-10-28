@@ -73,4 +73,4 @@ def celery():
 @blueprint.route('/connect/')
 def connect():
     """Page for connecting to the pi."""
-    return(str(connect_to_pi.delay({'r': ['VS1_GT1'] })))
+    return(str(connect_to_pi.delay({'r': ['VS1_GT1']})))
