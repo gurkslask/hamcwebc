@@ -51,8 +51,8 @@ def read_file():
 def readJSON(jsonData):
     '''Read names of sensors from JSON file.'''
     readlist = ["'" + jsonData[sensor]['name'] + "'" for sensor in jsonData]
-    print( '''{{r: [{}] }}'''.format(",".join(readlist)))
-    return( '''{{r: [{}] }}'''.format(",".join(readlist)))
+    print( '''{{'r': [{}] }}'''.format(",".join(readlist)))
+    return( '''{{'r': [{}] }}'''.format(",".join(readlist)))
 
 
 if __name__ == '__main__':
