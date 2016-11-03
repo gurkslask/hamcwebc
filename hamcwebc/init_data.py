@@ -50,11 +50,6 @@ class InitSQL(object):
         sensor.update(True, value=578)
 
 
-@celery.task()
-def add_together(a, b):
-    """Test."""
-    return a + b
-
 if __name__ == '__main__':
     a = InitSQL()
     print(a.do_work())

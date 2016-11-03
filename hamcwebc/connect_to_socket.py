@@ -1,12 +1,15 @@
-
+'''Here it is.'''
 import pickle
 import socket
 import sys
+import os
+import json
 
 __author__ = 'alexander'
 
+file_name = 'data_points.json'
+app_dir = os.path.abspath(os.path.dirname(__file__))
 
-# Echo client program
 def call_server(message):
     '''
     This function takes a dict and returns a dict. Example:
@@ -38,6 +41,18 @@ def call_server(message):
     s.close()
     return pickle.loads(data)
     # print 'Received', repr(data)
+
+def read_file():
+    """Extract the JSON file."""
+    with open(os.path.join(app_dir, file_name), 'r') as f:
+        jsonData = json.load(f)
+        return jsonData
+
+def readJSON(jsonData):
+    '''Read names of sensors from JSON file.'''
+    readlist = [jsonData[sensor]['name'] for sensor in jsonData]
+    print(readlist)
+
 
 if __name__ == '__main__':
     command_str = sys.argv[1].replace('\n', '').split(':')
