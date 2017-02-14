@@ -1,6 +1,6 @@
 {
     "1": {
-        "name": "GT1",
+        "name": "VS1_GT1",
         "value": 3,
         "limits": [
             {
@@ -14,7 +14,7 @@
         ]
     },
     "3": {
-        "name": "GT3",
+        "name": "VS1_GT2",
         "value": 3,
         "limits": [
             {
@@ -28,7 +28,7 @@
         ]
     },
     "2": {
-        "name": "GT2",
+        "name": "VS1_GT3",
         "value": 3,
         "limits": [
             {

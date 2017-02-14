@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Application configuration."""
 import os
+from datetime import timedelta
 
 
 class Config(object):
@@ -39,7 +40,14 @@ class DevConfig(Config):
     ASSETS_DEBUG = True  # Don't bundle/minify static assets
     CACHE_TYPE = 'simple'  # Can be "memcached", "redis", etc.
     CELERY_BROKER_URL = 'amqp://localhost'
-    CELERY_BACKEND = 'amqp://localhost'
+    CELERY_BACKEND = 'rpc://'
+    CELERYBEAT_SCHEDULE = {
+        'every_five_minutes': {
+            'task': 'example_add',
+            'schedule': timedelta(seconds=5),
+            'args': (1, 1)
+            }
+        }
 
 
 class TestConfig(Config):

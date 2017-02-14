@@ -8,7 +8,7 @@ from hamcwebc.public.forms import LoginForm
 from hamcwebc.user.forms import RegisterForm
 from hamcwebc.user.models import User
 from hamcwebc.utils import flash_errors
-from hamcwebc.tasks import add_together
+from hamcwebc.tasks import add_together, connect_to_pi 
 
 blueprint = Blueprint('public', __name__, static_folder='../static')
 
@@ -68,3 +68,9 @@ def about():
 def celery():
     """Celery page."""
     return(str(add_together.delay(1, 2)))
+
+
+@blueprint.route('/connect/')
+def connect():
+    """Page for connecting to the pi."""
+    return(str(connect_to_pi.delay({'r': ['VS1_GT1']})))
