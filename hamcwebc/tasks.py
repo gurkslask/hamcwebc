@@ -20,5 +20,9 @@ def connect_to_pi():
     print(result)
     for key in result.keys():
         print(key)
-        db.session.add(Sensor(name=key, value=result[key]['PV']))
+        sensor = Sensor.query.filter_by(name=key).first()
+        if sensor:
+            print(sensor)
+            sensor.value = result[key]['PV']
+            db.session.add(sensor)
     db.session.commit()

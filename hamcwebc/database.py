@@ -5,7 +5,6 @@ from sqlalchemy.orm import relationship
 from .compat import basestring
 from .extensions import db
 
-import datetime as dt
 
 # Alias common SQLAlchemy names
 Column = db.Column
@@ -83,7 +82,7 @@ def reference_col(tablename, nullable=False, pk_name='id', **kwargs):
         nullable=nullable, **kwargs)
 
 
-class Sensor(CRUDMixin, db.Model):
+class Sensor(Model, SurrogatePK):
     """Sensor class that connects to limits, alarm and trends."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -91,6 +90,10 @@ class Sensor(CRUDMixin, db.Model):
     value = db.Column(db.Float)
     limits = db.relationship('SensorLimit', backref='sensors')
     trends_id = db.Column(db.Integer, db.ForeignKey('trend.id'))
+
+    def __init__(self, name, **kwargs):
+        """Create instance."""
+        db.Model.__init__(self, name=name, **kwargs)
 
     def __repr__(self):
         """Print data."""
