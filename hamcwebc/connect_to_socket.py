@@ -72,4 +72,4 @@ if __name__ == '__main__':
     # command_str = sys.argv[1].replace('\n', '').split(':')
     # print(command_str)
     # command = {command_str[0]: [command_str[1]]}
-    print(read_values)
+    print(read_values())
