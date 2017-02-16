@@ -45,7 +45,12 @@ docs/_build
 
 # Virtualenvs
 hamcwebvenv/
+venv/
+env/
+celerybeat-schedule
+migrations/
 
 setup.fish
 dev.db
-
+tags
+hamcwebc/static/libs/
