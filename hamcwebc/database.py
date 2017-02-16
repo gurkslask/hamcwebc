@@ -95,6 +95,16 @@ class Sensor(Model, SurrogatePK):
         """Create instance."""
         db.Model.__init__(self, name=name, **kwargs)
 
+    @property
+    def value(self):
+        """Return value."""
+        return '{}'.format(self.value)
+
+    @property
+    def name(self):
+        """Return name."""
+        return '{}'.format(self.name)
+
     def __repr__(self):
         """Print data."""
         return 'Name: {}, Value: {}, limits: {}'.format(self.name, self.value, self.limits)

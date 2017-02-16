@@ -8,7 +8,8 @@ from hamcwebc.public.forms import LoginForm
 from hamcwebc.user.forms import RegisterForm
 from hamcwebc.user.models import User
 from hamcwebc.utils import flash_errors
-from hamcwebc.tasks import add_together, connect_to_pi 
+from hamcwebc.tasks import add_together, connect_to_pi
+from hamcwebc.database import Sensor
 
 blueprint = Blueprint('public', __name__, static_folder='../static')
 
@@ -74,3 +75,16 @@ def celery():
 def connect():
     """Page for connecting to the pi."""
     return(str(connect_to_pi.delay({'r': ['VS1_GT1']})))
+
+
+@blueprint.route('/connectSQL/')
+def connectsql():
+    """Page for showing data from SQL."""
+    data = Sensor.query.filter_by(name='VS1_GT2').first()
+    # data = Sensor.query.filter_by(name='VS1_GT1').first()
+    print(data)
+    print(type(data))
+    if data:
+            return(data.value())
+    else:
+            return render_template('404.html')

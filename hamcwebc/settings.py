@@ -49,7 +49,7 @@ class DevConfig(Config):
             },
         'every_five_seconds': {
             'task': 'connect_to_pi',
-            'schedule': timedelta(seconds=50)
+            'schedule': timedelta(seconds=5)
             }
         }
 
