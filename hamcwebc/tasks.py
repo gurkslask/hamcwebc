@@ -17,9 +17,7 @@ def add_together(a, b):
 def connect_to_pi():
     """Connect to the pi and request or write data."""
     result = read_values()
-    print(result)
     for key in result.keys():
-        print(key)
         sensor = Sensor.query.filter_by(name=key).first()
         if sensor:
             print(sensor)
