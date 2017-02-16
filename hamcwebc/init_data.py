@@ -2,8 +2,8 @@
 import json
 import os
 
-from .extensions import db, celery
-from .database import Sensor, SensorLimit
+from hamcwebc.extensions import db, celery
+from hamcwebc.database import Sensor, SensorLimit
 
 
 class InitSQL(object):

@@ -46,6 +46,7 @@ docs/_build
 # Virtualenvs
 hamcwebvenv/
 venv/
+env/
 celerybeat-schedule
 migrations/
 
