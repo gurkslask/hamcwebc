@@ -4,9 +4,19 @@
 {% block content %}
 Name: {{ data.name }}<p>
 Value: <p id="value">?</p>
+<script src="http://code.jquery.com/jquery.js"></script>
+<script>
+$(document).ready(function(){
+    setInterval(function(){
+        $.getJSON($SCRIPT_ROOT + '/_JSONSensorRead/VS1_GT1', {}, function(data)) {
+            $("#value").text(data.result.value) 
+            }
+        }
+    }, 1000);
+});
+</script>
 {% endblock %}
-{% block script %}
-<script src="{{url_for('static', filename='ajax_sensor_view.js')" }}> </script>
+{% block scripts %}
 {{ super() }}
 {% endblock %}
 
