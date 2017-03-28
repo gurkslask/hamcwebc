@@ -1,10 +1,7 @@
 """Delay functions with celery."""
 from .extensions import celery, db
 from .connect_to_socket import read_values
-try:
-    from .database import Sensor
-except ImportError:
-    from hamcwebc.database import Sensor
+from hamcwebc.user.models import Sensor
 
 
 @celery.task(name='example_add')

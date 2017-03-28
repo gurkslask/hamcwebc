@@ -1,0 +1,12 @@
+
+{% extends "layout.html" %}
+
+{% block content %}
+Name: {{ data.name }}<p>
+Value: <p id="value">?</p>
+{% endblock %}
+{% block script %}
+<script src="{{url_for('static', filename='ajax_sensor_view.js')" }}> </script>
+{{ super() }}
+{% endblock %}
+

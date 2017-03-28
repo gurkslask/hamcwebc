@@ -4,7 +4,7 @@ import datetime as dt
 
 from flask_login import UserMixin
 
-from hamcwebc.database import Column, Model, SurrogatePK, db, reference_col, relationship
+from hamcwebc.database import Column, Model, SurrogatePK, db, reference_col, relationship, CRUDMixin
 from hamcwebc.extensions import bcrypt
 
 
@@ -63,3 +63,21 @@ class User(UserMixin, SurrogatePK, Model):
     def __repr__(self):
         """Represent instance as a unique string."""
         return '<User({username!r})>'.format(username=self.username)
+
+
+class Sensor(SurrogatePK, Model, CRUDMixin):
+    """Sensor class that connects to limits, alarm and trends."""
+
+    __tablename__ = 'sensors'
+    name = Column(db.String(80), unique=True)
+    value = Column(db.Float)
+    # limits = db.relationship('SensorLimit', backref='sensors')
+    # trends_id = db.Column(db.Integer, db.ForeignKey('trend.id'))
+
+    def __init__(self, name, **kwargs):
+        """Create instance."""
+        db.Model.__init__(self, name=name, **kwargs)
+
+    def __repr__(self):
+        """Print data."""
+        return 'Name: {}, Value: {}'.format(self.name, self.value)

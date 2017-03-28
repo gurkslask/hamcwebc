@@ -82,14 +82,15 @@ def reference_col(tablename, nullable=False, pk_name='id', **kwargs):
         nullable=nullable, **kwargs)
 
 
-class Sensor(Model, SurrogatePK):
+'''class Sensor(db.Model, CRUDMixin):
     """Sensor class that connects to limits, alarm and trends."""
 
+    __tablename__ = 'sensors'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True)
     value = db.Column(db.Float)
-    limits = db.relationship('SensorLimit', backref='sensors')
-    trends_id = db.Column(db.Integer, db.ForeignKey('trend.id'))
+    # limits = db.relationship('SensorLimit', backref='sensors')
+    # trends_id = db.Column(db.Integer, db.ForeignKey('trend.id'))
 
     def __init__(self, name, **kwargs):
         """Create instance."""
@@ -107,11 +108,11 @@ class Sensor(Model, SurrogatePK):
 
     def __repr__(self):
         """Print data."""
-        return 'Name: {}, Value: {}, limits: {}'.format(self.name, self.value, self.limits)
+        return 'Name: {}, Value: {}, limits: {}'.format(self.name, self.value, self.limits)'''
 
 
-class SensorLimit(CRUDMixin, db.Model):
-    """Sensor limits that connects to Sensor."""
+"""class SensorLimit(CRUDMixin, db.Model):
+    Sensor limits that connects to Sensor.
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True)
@@ -119,12 +120,12 @@ class SensorLimit(CRUDMixin, db.Model):
     sensor_id = db.Column(db.Integer, db.ForeignKey('sensor.id'))
 
     def __repr__(self):
-        """Print data."""
+        Print data.
         return 'Name: {}, Value: {}, sensor_id: {}'.format(self.name, self.value, self.sensor_id)
 
 
 class Trend(CRUDMixin, db.Model):
-    """Data points (time and value) that connects to Sensor."""
+    Data points (time and value) that connects to Sensor.
 
     id = db.Column(db.Integer, primary_key=True)
     value = db.Column(db.Float)
@@ -132,6 +133,6 @@ class Trend(CRUDMixin, db.Model):
     sensors = db.relationship('Sensor', backref='trends')
 
     def __repr__(self):
-        """Print data."""
+        Print data.
         return 'Name: {}, Value: {}, Time: {},sensor_id: {}'.format(
-                self.name, self.value, self.time, self.sensor_id)
+                self.name, self.value, self.time, self.sensor_id)"""

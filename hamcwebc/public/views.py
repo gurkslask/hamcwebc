@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Public section, including homepage and signup."""
-from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask import Blueprint, flash, redirect, render_template, request, url_for, jsonify
 from flask_login import login_required, login_user, logout_user
 
 from hamcwebc.extensions import login_manager
@@ -9,7 +9,7 @@ from hamcwebc.user.forms import RegisterForm
 from hamcwebc.user.models import User
 from hamcwebc.utils import flash_errors
 from hamcwebc.tasks import add_together, connect_to_pi
-from hamcwebc.database import Sensor
+from hamcwebc.user.models import Sensor
 
 blueprint = Blueprint('public', __name__, static_folder='../static')
 
@@ -80,11 +80,17 @@ def connect():
 @blueprint.route('/connectSQL/')
 def connectsql():
     """Page for showing data from SQL."""
-    data = Sensor.query.filter_by(name='VS1_GT2').first()
-    # data = Sensor.query.filter_by(name='VS1_GT1').first()
-    print(data)
-    print(type(data))
+    data = Sensor.query.filter_by(name='VS1_GT1').first()
     if data:
-            return(data.value())
+            return render_template('public/sensor.html', data=data)
     else:
             return render_template('404.html')
+
+
+@blueprint.route('/_JSONSensorRead/<name>')
+def jsonsensorread(name):
+    """Make json data."""
+    data = Sensor.query.filter_by(name=name).first()
+    print(data)
+    if data:
+        return jsonify({'name': data.name, 'value': data.value})
