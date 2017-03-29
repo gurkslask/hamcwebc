@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Application configuration."""
 import os
+from datetime import timedelta
 
 
 class Config(object):
@@ -22,7 +23,7 @@ class ProdConfig(Config):
 
     ENV = 'prod'
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = 'postgresql://localhost/example'  # TODO: Change me
+    SQLALCHEMY_DATABASE_URI = 'postgresql://username:password@IP:port/database'  # TODO: Change me
     DEBUG_TB_ENABLED = False  # Disable Debug toolbar
 
 
@@ -39,7 +40,18 @@ class DevConfig(Config):
     ASSETS_DEBUG = True  # Don't bundle/minify static assets
     CACHE_TYPE = 'simple'  # Can be "memcached", "redis", etc.
     CELERY_BROKER_URL = 'amqp://localhost'
-    CELERY_BACKEND = 'amqp://localhost'
+    CELERY_BACKEND = 'rpc://'
+    CELERYBEAT_SCHEDULE = {
+        'every_five_minutes': {
+            'task': 'example_add',
+            'schedule': timedelta(seconds=5),
+            'args': (1, 1)
+            },
+        'every_five_seconds': {
+            'task': 'connect_to_pi',
+            'schedule': timedelta(seconds=5)
+            }
+        }
 
 
 class TestConfig(Config):
