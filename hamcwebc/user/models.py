@@ -71,7 +71,7 @@ class Sensor(SurrogatePK, Model, CRUDMixin):
     __tablename__ = 'sensors'
     name = Column(db.String(80), unique=True)
     value = Column(db.Float)
-    # limits = db.relationship('SensorLimit', backref='sensors')
+    limits = db.relationship('SensorLimit', backref='sensors')
     # trends_id = db.Column(db.Integer, db.ForeignKey('trend.id'))
 
     def __init__(self, name, **kwargs):
@@ -81,3 +81,17 @@ class Sensor(SurrogatePK, Model, CRUDMixin):
     def __repr__(self):
         """Print data."""
         return 'Name: {}, Value: {}'.format(self.name, self.value)
+
+
+class SensorLimit(SurrogatePK, Model, CRUDMixin):
+    """Sensor limits that connects to Sensor."""
+
+    __tablename__ = 'sensorlimits'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, unique=True)
+    value = db.Column(db.Float)
+    sensor_id = db.Column(db.Integer, db.ForeignKey('sensors.id'))
+
+    def __repr__(self):
+        """Print data."""
+        return 'Name: {}, Value: {}, sensor_id: {}'.format(self.name, self.value, self.sensor_id)

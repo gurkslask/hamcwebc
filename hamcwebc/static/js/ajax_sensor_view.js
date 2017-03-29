@@ -1,8 +1,7 @@
 $(document).ready(function(){
     setInterval(function(){
-        $.getJSON($SCRIPT_ROOT + '/_JSONSensorRead/' + {{dObject|tojson|safe}}, {}, function(data)) {
-            $("#value").text(data.result.{{dObject|safe}}.value) 
-            }
-        }
-    }, 1000);
+        $.getJSON('http://127.0.0.1:5000/_JSONSensorRead/' + $SENSOR_NAME, {}, function(data) {
+            $("#value").text("Value: " + data.value);
+        })
+    }, 3000);
 });
