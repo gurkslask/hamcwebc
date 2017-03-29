@@ -3,13 +3,14 @@
 from flask import Blueprint, flash, redirect, render_template, url_for, jsonify, request
 from flask_login import login_required, login_user, logout_user
 
-from hamcwebc.extensions import login_manager
+from hamcwebc.extensions import login_manager, db
 from hamcwebc.public.forms import LoginForm
 from hamcwebc.user.forms import RegisterForm
 from hamcwebc.user.models import User
 from hamcwebc.utils import flash_errors
 from hamcwebc.tasks import add_together, connect_to_pi
 from hamcwebc.user.models import Sensor, SensorLimit
+
 
 blueprint = Blueprint('public', __name__, static_folder='../static')
 
@@ -94,3 +95,17 @@ def jsonsensorread(name):
     data = Sensor.query.filter_by(name=name).first()
     if data:
         return jsonify({'name': data.name, 'value': data.value})
+
+
+@blueprint.route('/update', methods=['POST'])
+def updatelimit():
+    """Update    sensorlimits."""
+    print(request.form['id'])
+    print(request.form['value'])
+    #limit = SensorLimit.query.filter_by(id=request.form['id']).first()
+    #print(request.form['id'])
+    #print(limit)
+    #limit.value = request.form['value']
+
+    #db.session.commit()
+    return "Hej"

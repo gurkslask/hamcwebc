@@ -5,10 +5,20 @@
 {% block content %}
 <h1>Name: {{ data.name }}
     <div id="value">Value: </div></h1>
+
 {% for limit in data.limits %}
-    <li> {{ limit.name }} - {{limit.value}} </li>
+    <li> {{ limit.name }} 
+        <div class="form-inline">
+            <label for="valueInput{{ limit.id }}">Value</label>
+            <input type="text" class="form-control" id="valueInput{{ limit.id }}", value="{{ limit.value }}"></input>
+            <button class="btn btn-primary updateButton" limit_id="{{limit.id}}">Update</button>
+        </div>
+    </li>
+
 {% endfor %}
+
 {% endblock %}
+
 {% block js %}
 {{super()}}
 <script> var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }} //Use this when not using flask wsgi!</script>
