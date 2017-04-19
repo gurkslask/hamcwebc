@@ -23,7 +23,7 @@ class ProdConfig(Config):
 
     ENV = 'prod'
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = 'postgresql://username:password@IP:port/database'  # TODO: Change me
+    SQLALCHEMY_DATABASE_URI = 'postgresql://alex:bit@127.0.0.1:5432/alex'  # TODO: Change me
     DEBUG_TB_ENABLED = False  # Disable Debug toolbar
 
 
