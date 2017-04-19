@@ -46,6 +46,10 @@ class DevConfig(Config):
             'task': 'example_add',
             'schedule': timedelta(seconds=5),
             'args': (1, 1)
+            },
+        'every_five_seconds': {
+            'task': 'connect_to_pi',
+            'schedule': timedelta(seconds=5)
             }
         }
 

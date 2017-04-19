@@ -1,10 +1,7 @@
 """Delay functions with celery."""
 from .extensions import celery, db
-from .connect_to_socket import call_server
-try:
-    from .database import Sensor
-except ImportError:
-    from hamcwebc.database import Sensor
+from .connect_to_socket import read_values
+from hamcwebc.user.models import Sensor
 
 
 @celery.task(name='example_add')
@@ -14,9 +11,13 @@ def add_together(a, b):
 
 
 @celery.task(name='connect_to_pi')
-def connect_to_pi(message):
+def connect_to_pi():
     """Connect to the pi and request or write data."""
-    result = call_server(message)
+    result = read_values()
     for key in result.keys():
-        db.session.add(Sensor(name=key, value=result[key]['PV']))
+        sensor = Sensor.query.filter_by(name=key).first()
+        if sensor:
+            print(sensor)
+            sensor.value = result[key]['PV']
+            db.session.add(sensor)
     db.session.commit()
