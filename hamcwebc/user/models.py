@@ -4,6 +4,8 @@ import datetime as dt
 
 from flask_login import UserMixin
 
+from sqlalchemy.sql import func
+
 from hamcwebc.database import Column, Model, SurrogatePK, db, reference_col, relationship, CRUDMixin
 from hamcwebc.extensions import bcrypt
 
@@ -72,6 +74,7 @@ class Sensor(SurrogatePK, Model, CRUDMixin):
     name = Column(db.String(80), unique=True)
     value = Column(db.Float)
     limits = db.relationship('SensorLimit', backref='sensors')
+    timedata = db.relationship('SensorTimeData', backref='sensors')
     # trends_id = db.Column(db.Integer, db.ForeignKey('trend.id'))
 
     def __init__(self, name, **kwargs):
@@ -95,3 +98,17 @@ class SensorLimit(SurrogatePK, Model, CRUDMixin):
     def __repr__(self):
         """Print data."""
         return 'Name: {}, Value: {}, sensor_id: {}'.format(self.name, self.value, self.sensor_id)
+
+
+class SensorTimeData(SurrogatePK, Model, CRUDMixin):
+    """Sensor logging with timestamp."""
+
+    __tablename__ = 'sensortimedata'
+    id = db.Column(db.Integer, primary_key=True)
+    data = db.Column(db.Float)
+    time = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    sensor_id = db.Column(db.Integer, db.ForeignKey('sensors.id'))
+
+    def __repr__(self):
+        """Print data."""
+        return 'Data: {}, Time: {}, sensor_id: {}'.format(self.data, self.time, self.sensor_id)

@@ -3,7 +3,7 @@
 from flask import Blueprint, flash, redirect, render_template, url_for, jsonify, request
 from flask_login import login_required, login_user, logout_user
 
-from hamcwebc.extensions import login_manager, db
+from hamcwebc.extensions import login_manager
 from hamcwebc.public.forms import LoginForm
 from hamcwebc.user.forms import RegisterForm
 from hamcwebc.user.models import User
@@ -82,11 +82,21 @@ def connect():
 def sensor_view(sensor):
     """Page for showing data from SQL."""
     data = Sensor.query.filter_by(name=sensor).first()
-    print(data.limits)
     if data:
-            return render_template('public/sensor.html', data=data)
+        return render_template('public/sensor.html', data=data)
     else:
-            return render_template('404.html')
+        return render_template('404.html')
+
+
+@blueprint.route('/allsensors')
+def allsensors():
+    """Page for viewing all sensors."""
+    data = Sensor.query.all()
+    # data = Sensor.query.filter_by(name='*').all()
+    if data:
+        return render_template('public/allsensors.html', data=data)
+    else:
+        return render_template('404.html')
 
 
 @blueprint.route('/_JSONSensorRead/<name>')

@@ -2,7 +2,7 @@
 import json
 import os
 
-from hamcwebc.extensions import db, celery
+from hamcwebc.extensions import db
 from hamcwebc.database import Sensor, SensorLimit
 
 
