@@ -1,0 +1,21 @@
+
+{% extends "layout.html" %}
+
+
+{% block content %}
+{% for sensor in data %}
+<li>
+    <h1>Name: {{ sensor.name }}
+        <div id="value">Value: </div></h1>
+</li>
+{% endfor %}
+
+{% endblock %}
+
+{% block js %}
+{{super()}}
+<script> var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }} //Use this when not using flask wsgi!</script>
+<script> var $SENSOR_NAME = "{{ data.name }}";</script>
+<script type="text/javascript" src="{{url_for('static', filename='js/ajax_sensor_view.js')}}"></script>
+{% endblock %}
+
