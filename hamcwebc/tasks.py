@@ -1,7 +1,7 @@
 """Delay functions with celery."""
 from .extensions import celery, db
 from .connect_to_socket import read_values
-from hamcwebc.user.models import Sensor
+from hamcwebc.user.models import Sensor, SensorTimeData
 
 
 @celery.task(name='example_add')
@@ -16,8 +16,17 @@ def connect_to_pi():
     result = read_values()
     for key in result.keys():
         sensor = Sensor.query.filter_by(name=key).first()
+        pv = result[key]['PV']
         if sensor:
-            print(sensor)
-            sensor.value = result[key]['PV']
+            """If sensor exists."""
+            sensortimedata = SensorTimeData()
+            sensortimedata.data = pv
+            sensor.value = pv
+            sensor.timedata = sensor.timedata + [sensortimedata]
+            db.session.add(sensortimedata)
+            db.session.add(sensor)
+        else:
+            sensor = Sensor(key)
+            sensor.value = pv
             db.session.add(sensor)
     db.session.commit()
