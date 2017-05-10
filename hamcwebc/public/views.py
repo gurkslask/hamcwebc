@@ -82,6 +82,8 @@ def connect():
 def sensor_view(sensor):
     """Page for showing data from SQL."""
     data = Sensor.query.filter_by(name=sensor).first()
+    if not request.script_root:
+        request.script_root = url_for('public.home', _external=True)
     if data:
         return render_template('public/sensor.html', data=data)
     else:
@@ -93,8 +95,10 @@ def allsensors():
     """Page for viewing all sensors."""
     data = Sensor.query.all()
     # data = Sensor.query.filter_by(name='*').all()
+    if not request.script_root:
+        request.script_root = url_for('public.home', _external=True)
     if data:
-        return render_template('public/allsensors.html', data=data)
+        return render_template('public/allsensors.html', data=data, request=request)
     else:
         return render_template('404.html')
 
