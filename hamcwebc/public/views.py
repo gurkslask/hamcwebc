@@ -82,8 +82,7 @@ def connect():
 def sensor_view(sensor):
     """Page for showing data from SQL."""
     data = Sensor.query.filter_by(name=sensor).first()
-    if not request.script_root:
-        request.script_root = url_for('public.home', _external=True)
+    script_root()
     if data:
         return render_template('public/sensor.html', data=data)
     else:
@@ -95,8 +94,7 @@ def allsensors():
     """Page for viewing all sensors."""
     data = Sensor.query.all()
     # data = Sensor.query.filter_by(name='*').all()
-    if not request.script_root:
-        request.script_root = url_for('public.home', _external=True)
+    script_root()
     if data:
         return render_template('public/allsensors.html', data=data, request=request)
     else:
@@ -114,6 +112,7 @@ def jsonsensorread(name):
 @blueprint.route('/update', methods=['POST'])
 def updatelimit():
     """Update    sensorlimits."""
+    script_root()
     print(request.form['id'])
     print(request.form['value'])
     #limit = SensorLimit.query.filter_by(id=request.form['id']).first()
@@ -123,3 +122,8 @@ def updatelimit():
 
     #db.session.commit()
     return "Hej"
+
+
+def script_root():
+    if not request.script_root:
+        request.script_root = url_for('public.home', _external=True)
