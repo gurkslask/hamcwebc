@@ -43,14 +43,9 @@ class DevConfig(Config):
     CELERY_BROKER_URL = 'amqp://localhost'
     CELERY_BACKEND = 'rpc://'
     CELERYBEAT_SCHEDULE = {
-        'every_five_minutes': {
-            'task': 'example_add',
-            'schedule': timedelta(seconds=5),
-            'args': (1, 1)
-            },
         'every_five_seconds': {
             'task': 'connect_to_pi',
-            'schedule': timedelta(seconds=5)
+            'schedule': timedelta(seconds=20)
             }
         }
 
